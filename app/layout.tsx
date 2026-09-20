@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, IBM_Plex_Mono, Inter } from "next/font/google";
+import { Space_Grotesk, IBM_Plex_Mono, Inter, Newsreader } from "next/font/google";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -20,15 +20,22 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  style: ["normal", "italic"],
+  weight: ["400", "500", "600"],
+});
+
 export const metadata: Metadata = {
-  title: "SAJDEX — Sajal (Sam) | ML Engineer & Full-Stack Builder",
+  title: "SAJAL / SAJDEX — Developer, Builder & Creative Technologist",
   description:
-    "Personal portfolio and engineering workstation for Sajal (Sam). Building intelligent products at the intersection of machine learning, software, and design.",
+    "I build products for the web, explore AI, and turn ideas into real software.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} ${inter.variable}`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} ${inter.variable} ${newsreader.variable}`}>
       <body className="min-h-screen bg-[#08090B] text-[#F8FAFC] antialiased selection:bg-[#EF4444] selection:text-white font-sans">
         {children}
       </body>

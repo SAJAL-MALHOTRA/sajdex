@@ -2,63 +2,66 @@
 
 import { motion } from 'framer-motion';
 import { profile } from '@/data/profile';
-import { ArrowUpRight, Mail } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useSound } from '@/hooks/useSound';
 
 export default function ContactSection() {
   const { playClick, playHover } = useSound();
 
   const links = [
-    { label: 'Email', value: profile.links.email, url: `mailto:${profile.links.email}`, note: 'Direct inbox for opportunities' },
-    { label: 'GitHub', value: 'github.com/sajal', url: profile.links.github, note: 'Code repositories and open source' },
-    { label: 'LinkedIn', value: 'linkedin.com/in/sajal', url: profile.links.linkedin, note: 'Professional background and network' },
-    { label: 'Twitter / X', value: '@sajal', url: profile.links.twitter, note: 'Engineering thoughts and builds' },
+    { label: profile.links.email, url: `mailto:${profile.links.email}` },
+    { label: 'GitHub', url: profile.links.github },
+    { label: 'LinkedIn', url: profile.links.linkedin },
+    { label: 'Twitter', url: profile.links.twitter },
   ];
 
   return (
-    <div className="w-full space-y-10 select-text max-w-2xl mx-auto">
+    <div className="w-full space-y-12 select-text">
       
-      {/* Contact Header */}
-      <div className="space-y-3 border-b border-white/[0.08] pb-6">
-        <span className="text-xs font-mono text-[#9E9EA8] uppercase tracking-wider block">
-          Contact
-        </span>
-        <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#F4F4F6]">
-          Get in touch
-        </h2>
-        <p className="text-sm sm:text-base text-[#9E9EA8] leading-relaxed font-sans">
-          I&apos;m currently looking for engineering internships, research roles, and interesting collaborative projects. Feel free to reach out directly.
-        </p>
+      {/* Section 04 Header */}
+      <div className="border-b border-white/[0.08] pb-4 font-mono text-xs text-[#8E8E93]">
+        <span className="text-[#EF4444] font-bold">04 —</span>
       </div>
 
-      {/* Clean Interactive Links */}
-      <div className="space-y-3">
-        {links.map((link) => (
-          <motion.a
-            key={link.label}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={playClick}
-            onMouseEnter={playHover}
-            whileHover={{ x: 4 }}
-            className="group flex items-center justify-between p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.2] hover:bg-white/[0.04] transition-all cursor-pointer shadow-sm"
-          >
-            <div>
-              <div className="font-display font-semibold text-base text-[#F4F4F6] group-hover:text-white transition-colors">
-                {link.label}
-              </div>
-              <div className="text-xs text-[#9E9EA8] font-sans">
-                {link.note}
-              </div>
-            </div>
+      {/* Main Grid: Headline (Left) + Links (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        
+        {/* Left: Signature Dual-Font Call to Action */}
+        <div className="lg:col-span-8 space-y-0 select-none">
+          <h2 className="font-display font-bold text-5xl sm:text-7xl lg:text-[5.5rem] tracking-tight text-[#F5F5F7] leading-[0.95]">
+            Let&apos;s make
+          </h2>
+          <h2 className="font-serif-editorial italic font-normal text-5xl sm:text-7xl lg:text-[5.8rem] tracking-tight text-[#F5F5F7] leading-[0.95]">
+            something useful.
+          </h2>
+        </div>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-[#9E9EA8] group-hover:text-white transition-colors">
-              <span className="hidden sm:inline">{link.value}</span>
-              <ArrowUpRight size={15} />
-            </div>
-          </motion.a>
-        ))}
+        {/* Right: Direct Link List */}
+        <div className="lg:col-span-4 space-y-4 pt-2">
+          {links.map((link) => (
+            <motion.a
+              key={link.label}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={playClick}
+              onMouseEnter={playHover}
+              className="flex items-center justify-between py-2 text-base font-sans text-[#8E8E93] hover:text-[#F5F5F7] transition-colors border-b border-white/[0.04] group cursor-pointer"
+            >
+              <span>{link.label}</span>
+              <ArrowUpRight
+                size={16}
+                className="text-[#636366] group-hover:text-[#EF4444] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+              />
+            </motion.a>
+          ))}
+        </div>
+
+      </div>
+
+      {/* Bottom Copyright */}
+      <div className="pt-12 border-t border-white/[0.06] font-mono text-[11px] text-[#636366] tracking-wider uppercase">
+        <span>© {new Date().getFullYear()} SAJAL MALHOTRA / ALL RIGHTS RESERVED</span>
       </div>
 
     </div>

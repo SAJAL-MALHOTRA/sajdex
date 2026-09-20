@@ -12,88 +12,102 @@ interface ProjectDexProps {
 export default function ProjectDex({ onOpenModalProject }: ProjectDexProps) {
   const { playClick, playHover } = useSound();
 
+  // Curated showcase matching the reference
+  const showcaseProjects = [
+    {
+      id: 'OBJ-001',
+      number: '01',
+      name: 'Pairfect',
+      category: 'PRIMARY PRODUCT · 2025',
+      description: 'A relationship platform designed around shared memories, rituals and meaningful interaction.',
+      stack: ['Next.js', 'TypeScript', 'Supabase', 'WebRTC'],
+      originalId: 'OBJ-001',
+    },
+    {
+      id: 'OBJ-026',
+      number: '02',
+      name: 'Thinkfolio',
+      category: 'PRODUCT STUDY · 2024',
+      description: 'A focused workspace for turning scattered thinking into a living portfolio of ideas.',
+      stack: ['React', 'TypeScript', 'Tailwind', 'PyTorch'],
+      originalId: 'OBJ-026',
+    },
+    {
+      id: 'OBJ-094',
+      number: '03',
+      name: 'CampusConnect',
+      category: 'COMMUNITY PLATFORM · 2024',
+      description: 'A connected campus experience built for useful conversations and real-world community.',
+      stack: ['Next.js', 'Supabase', 'Tailwind', 'LangGraph'],
+      originalId: 'OBJ-094',
+    },
+  ];
+
   return (
-    <div className="w-full space-y-12 py-4 select-text max-w-4xl mx-auto">
+    <div className="w-full space-y-8 select-text">
       
-      {/* Editorial Header */}
-      <div className="space-y-2 border-b border-white/[0.08] pb-6">
-        <span className="text-xs font-mono text-[#9E9EA8] uppercase tracking-wider block">
-          Featured Work
+      {/* Section 01 Header */}
+      <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 font-mono text-xs text-[#8E8E93]">
+        <div className="flex items-center gap-2">
+          <span className="text-[#EF4444] font-bold">01 —</span>
+          <h2 className="text-[#F5F5F7] font-semibold tracking-wide text-sm font-sans">Selected work</h2>
+        </div>
+
+        <span className="tracking-widest uppercase text-[11px] text-[#636366]">
+          THREE THINGS I&apos;VE MADE
         </span>
-        <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#F4F4F6]">
-          Projects & Systems
-        </h2>
-        <p className="text-sm text-[#9E9EA8] max-w-xl font-sans leading-relaxed">
-          Production software and research architectures built across machine learning, real-time sync, and distributed agents.
-        </p>
       </div>
 
-      {/* Clean Stacked Projects List */}
-      <div className="space-y-8">
-        {projects.map((project: Project, index: number) => {
-          const num = `0${index + 1}`;
-          
-          return (
-            <motion.div
-              key={project.id}
-              onClick={() => {
-                playClick();
-                if (onOpenModalProject) onOpenModalProject(project.id);
-              }}
-              onMouseEnter={playHover}
-              whileHover={{ y: -3 }}
-              transition={{ duration: 0.2 }}
-              className="group cursor-pointer p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.18] hover:bg-white/[0.04] transition-all space-y-5 shadow-sm"
-            >
-              {/* Header: 01 + Status */}
-              <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-[#62636C] font-semibold">{num}</span>
-                <span className="px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-[11px] text-[#9E9EA8]">
-                  {project.status}
+      {/* Stacked Project Showcase Rows */}
+      <div className="divide-y divide-white/[0.08]">
+        {showcaseProjects.map((project) => (
+          <motion.div
+            key={project.id}
+            onClick={() => {
+              playClick();
+              if (onOpenModalProject) onOpenModalProject(project.originalId);
+            }}
+            onMouseEnter={playHover}
+            className="py-10 sm:py-14 group cursor-pointer space-y-4 transition-colors hover:bg-white/[0.01] -mx-4 px-4 rounded-xl"
+          >
+            {/* Top Line: Red Number, Big Title & Category Tag */}
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+              
+              <div className="flex items-baseline gap-4 sm:gap-6">
+                <span className="font-mono text-xs font-bold text-[#EF4444]">
+                  {project.number}
                 </span>
-              </div>
 
-              {/* Title & Tagline */}
-              <div>
-                <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#F4F4F6] group-hover:text-white transition-colors">
-                  {project.name}
+                <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F5F5F7] group-hover:text-white transition-colors flex items-center gap-2">
+                  <span>{project.name}</span>
+                  <ArrowUpRight
+                    size={22}
+                    className="text-[#EF4444] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"
+                  />
                 </h3>
-                <p className="text-xs font-mono text-[#9E9EA8] pt-1">
-                  {project.tagline}
-                </p>
               </div>
 
-              {/* Description */}
-              <p className="text-sm sm:text-base text-[#9E9EA8] font-sans leading-relaxed">
-                {project.solution || project.description}
+              <div className="flex items-center gap-1.5 font-mono text-xs text-[#8E8E93] group-hover:text-[#F5F5F7] transition-colors pl-8 sm:pl-0">
+                <span>{project.category}</span>
+                <ArrowUpRight size={13} className="text-[#636366]" />
+              </div>
+
+            </div>
+
+            {/* Description Narrative */}
+            <div className="pl-8 sm:pl-10 max-w-2xl">
+              <p className="text-sm sm:text-base text-[#8E8E93] group-hover:text-[#A1A1A6] font-sans leading-relaxed transition-colors">
+                {project.description}
               </p>
+            </div>
 
-              {/* Metric & Tech Stack */}
-              <div className="pt-4 border-t border-white/[0.04] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono text-[#9E9EA8]">
-                  {project.stack.map((item) => (
-                    <span
-                      key={item}
-                      className="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] text-[11px]"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+            {/* Tech Stack Metadata */}
+            <div className="pl-8 sm:pl-10 pt-1 font-mono text-xs text-[#636366]">
+              <span>{project.stack.join(' · ')}</span>
+            </div>
 
-                <div className="flex items-center gap-4 shrink-0 font-mono text-xs">
-                  <span className="font-bold text-[#F4F4F6] bg-white/[0.06] px-2.5 py-1 rounded-md border border-white/[0.08]">
-                    {project.metric}
-                  </span>
-                  <span className="text-[#F4F4F6] group-hover:text-white flex items-center gap-1 font-sans font-medium">
-                    <span>Case study</span>
-                    <ArrowUpRight size={14} />
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
+          </motion.div>
+        ))}
       </div>
 
     </div>

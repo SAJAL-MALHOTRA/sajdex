@@ -1,65 +1,47 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import HeroSection from '@/components/sections/HeroSection';
-import DeveloperTerminal from '@/components/terminal/DeveloperTerminal';
 import ProjectDex from '@/components/sections/ProjectDex';
+import AboutSection from '@/components/sections/AboutSection';
+import StackSection from '@/components/sections/StackSection';
 import ContactSection from '@/components/sections/ContactSection';
-import SocialFooter from '@/components/layout/SocialFooter';
 import ProjectModal from '@/components/ui/ProjectModal';
-import JourneySidebar from '@/components/ui/JourneySidebar';
 import SajalsTastePlayer from '@/components/layout/SajalsTastePlayer';
+import DevDexWidget from '@/components/ui/DevDexWidget';
 import KonamiEasterEgg from '@/components/ui/KonamiEasterEgg';
 import CommandPalette from '@/components/ui/CommandPalette';
 import { projects } from '@/data/projects';
-import { profile } from '@/data/profile';
-import { ArrowUpRight } from 'lucide-react';
 import { useSound } from '@/hooks/useSound';
 
-export type ViewType = 'home' | 'work' | 'terminal' | 'contact';
+export type ViewType = 'hero' | 'work' | 'about' | 'stack' | 'contact';
 
 export default function Home() {
-  const [activeView, setActiveView] = useState<ViewType>('home');
   const [modalProjectId, setModalProjectId] = useState<string | null>(null);
-  const [journeySidebarOpen, setJourneySidebarOpen] = useState(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
-
-  const { playClick, playHover, playModalOpen } = useSound();
+  const { playClick, playHover } = useSound();
 
   const activeModalProject = modalProjectId
     ? projects.find((p) => p.id === modalProjectId) || null
     : null;
 
-  // Global Keyboard Navigation (1, 2, 3, 4, J)
-  useEffect(() => {
-    const handleGlobalKeyDown = (e: KeyboardEvent) => {
-      const targetTag = (e.target as HTMLElement)?.tagName?.toUpperCase();
-      if (targetTag === 'INPUT' || targetTag === 'TEXTAREA') return;
-
-      if (e.key === '1') setActiveView('home');
-      else if (e.key === '2') setActiveView('work');
-      else if (e.key === '3') setActiveView('terminal');
-      else if (e.key === '4') setActiveView('contact');
-      else if (e.key === 'j' || e.key === 'J') {
-        playModalOpen();
-        setJourneySidebarOpen((prev) => !prev);
-      }
-    };
-
-    window.addEventListener('keydown', handleGlobalKeyDown);
-    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
-  }, [playModalOpen]);
+  const scrollToSection = (id: string) => {
+    playClick();
+    const elem = document.getElementById(id);
+    if (elem) {
+      elem.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const navItems = [
-    { id: 'home' as ViewType, label: 'Overview' },
-    { id: 'work' as ViewType, label: 'Projects' },
-    { id: 'terminal' as ViewType, label: 'Terminal' },
-    { id: 'contact' as ViewType, label: 'Contact' },
+    { id: 'work', label: 'Work', num: '01' },
+    { id: 'about', label: 'About', num: '02' },
+    { id: 'stack', label: 'Stack', num: '03' },
+    { id: 'contact', label: 'Contact', num: '04' },
   ];
 
   return (
-    <div className="min-h-screen w-full bg-[#090A0C] text-[#F4F4F6] relative font-sans refined-canvas selection:bg-white selection:text-black flex flex-col justify-between overflow-x-hidden">
+    <div className="min-h-screen w-full bg-[#0A0B0D] text-[#F5F5F7] relative font-sans editorial-canvas selection:bg-[#EF4444] selection:text-white flex flex-col justify-between overflow-x-hidden">
       
       {/* Konami Easter Egg */}
       <KonamiEasterEgg />
@@ -68,172 +50,99 @@ export default function Home() {
       <CommandPalette
         isOpen={commandPaletteOpen}
         onClose={() => setCommandPaletteOpen(false)}
-        onSelectView={(v) => setActiveView(v)}
+        onSelectView={(v) => scrollToSection(v)}
         onOpenModalProject={(id) => setModalProjectId(id)}
       />
 
-      {/* Experience & Education Slide-over Drawer */}
-      <JourneySidebar
-        isOpen={journeySidebarOpen}
-        onClose={() => setJourneySidebarOpen(false)}
-      />
-
-      {/* ─── 1. CLEAN REFINED TOP NAVIGATION ─── */}
-      <header className="w-full max-w-5xl mx-auto px-6 sm:px-8 pt-8 pb-4 flex items-center justify-between z-30 select-none">
+      {/* ─── 1. TOP EDITORIAL NAVIGATION ─── */}
+      <header className="w-full max-w-6xl mx-auto px-6 sm:px-10 pt-8 pb-6 flex items-center justify-between z-30 select-none font-mono text-xs">
         
-        {/* Left: Author Brand */}
+        {/* Left: Brand / Monogram */}
         <button
           onClick={() => {
             playClick();
-            setActiveView('home');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="font-display font-bold text-lg sm:text-xl tracking-tight text-[#F4F4F6] hover:text-white transition-colors cursor-pointer"
+          className="flex items-center gap-2 text-[#F5F5F7] hover:text-[#EF4444] transition-colors cursor-pointer font-bold tracking-wider uppercase text-xs"
         >
-          Sajal
+          <span className="w-2 h-2 rounded-full bg-[#EF4444] animate-pulse" />
+          <span>SAJAL / SAJDEX</span>
         </button>
 
-        {/* Center: Nav links */}
-        <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-[#9E9EA8]">
-          {navItems.map((item) => {
-            const isActive = activeView === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => {
-                  playClick();
-                  setActiveView(item.id);
-                }}
-                onMouseEnter={playHover}
-                className={`transition-colors cursor-pointer py-1 ${
-                  isActive
-                    ? 'text-[#F4F4F6] font-semibold border-b border-white'
-                    : 'hover:text-[#F4F4F6]'
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-
-          <button
-            onClick={() => {
-              playModalOpen();
-              setJourneySidebarOpen(true);
-            }}
-            onMouseEnter={playHover}
-            className="hover:text-[#F4F4F6] transition-colors cursor-pointer py-1"
-          >
-            Experience
-          </button>
+        {/* Center: Numbered Navigation Links */}
+        <nav className="hidden md:flex items-center gap-8 text-xs font-mono">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              onMouseEnter={playHover}
+              className="group flex items-center gap-1.5 text-[#8E8E93] hover:text-[#F5F5F7] transition-colors cursor-pointer py-1"
+            >
+              <span className="text-[#636366] group-hover:text-[#EF4444] transition-colors">{item.num}</span>
+              <span className="font-sans font-medium text-xs">{item.label}</span>
+            </button>
+          ))}
         </nav>
 
-        {/* Right: Quick Actions & Music Player */}
-        <div className="flex items-center gap-3">
-          {/* Music Player */}
+        {/* Right: Location/Year & Music Player */}
+        <div className="flex items-center gap-4">
+          <span className="hidden sm:inline text-[#636366] text-[11px] tracking-wider">
+            IN / {new Date().getFullYear()}
+          </span>
+
           <SajalsTastePlayer />
-
-          <a
-            href={profile.links.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.1] hover:border-white/[0.2] text-[#F4F4F6] text-xs font-medium transition-colors"
-          >
-            <span>CV</span>
-            <ArrowUpRight size={13} className="text-[#9E9EA8]" />
-          </a>
-
-          <button
-            onClick={() => {
-              playClick();
-              setActiveView('contact');
-            }}
-            className="hidden sm:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#F4F4F6] text-[#090A0C] font-semibold text-xs tracking-tight hover:bg-white transition-all shadow-sm cursor-pointer"
-          >
-            <span>Contact</span>
-            <ArrowUpRight size={13} />
-          </button>
         </div>
       </header>
 
       {/* Mobile Sub-Nav */}
-      <div className="md:hidden flex items-center justify-center gap-5 py-3 border-y border-white/[0.06] bg-[#090A0C]/80 backdrop-blur-md sticky top-0 z-20 text-xs font-medium text-[#9E9EA8]">
+      <div className="md:hidden flex items-center justify-center gap-6 py-3 border-y border-white/[0.06] bg-[#0A0B0D]/90 backdrop-blur-md sticky top-0 z-20 font-mono text-xs">
         {navItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => {
-              playClick();
-              setActiveView(item.id);
-            }}
-            className={`transition-colors ${
-              activeView === item.id ? 'text-[#F4F4F6] font-bold border-b border-white pb-0.5' : ''
-            }`}
+            onClick={() => scrollToSection(item.id)}
+            className="flex items-center gap-1 text-[#8E8E93] hover:text-[#F5F5F7]"
           >
-            {item.label}
+            <span className="text-[#EF4444]">{item.num}</span>
+            <span>{item.label}</span>
           </button>
         ))}
-        <button
-          onClick={() => {
-            playModalOpen();
-            setJourneySidebarOpen(true);
-          }}
-          className="hover:text-white"
-        >
-          Experience
-        </button>
       </div>
 
-      {/* ─── 2. MAIN EDITORIAL CONTENT ─── */}
-      <main className="w-full max-w-5xl mx-auto px-6 sm:px-8 py-8 sm:py-16 flex-1 flex flex-col justify-center">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeView}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full"
-          >
-            {activeView === 'home' && (
-              <HeroSection
-                onNavigateWork={() => setActiveView('work')}
-                onNavigateContact={() => setActiveView('contact')}
-                onOpenTerminal={() => setActiveView('terminal')}
-              />
-            )}
+      {/* ─── 2. MAIN SECTIONS FLOW ─── */}
+      <main className="w-full max-w-6xl mx-auto px-6 sm:px-10 py-8 sm:py-16 space-y-28 sm:space-y-36 flex-1">
+        
+        {/* HERO SECTION */}
+        <section id="hero">
+          <HeroSection
+            onNavigateWork={() => scrollToSection('work')}
+            onNavigateContact={() => scrollToSection('contact')}
+          />
+        </section>
 
-            {activeView === 'work' && (
-              <ProjectDex onOpenModalProject={(id) => setModalProjectId(id)} />
-            )}
+        {/* 01 — SELECTED WORK */}
+        <section id="work" className="scroll-mt-24">
+          <ProjectDex onOpenModalProject={(id) => setModalProjectId(id)} />
+        </section>
 
-            {activeView === 'terminal' && (
-              <div className="w-full max-w-3xl mx-auto py-4 space-y-4">
-                <div className="flex items-center justify-between text-xs text-[#9E9EA8] font-mono">
-                  <span className="text-[#F4F4F6] font-semibold">Interactive Developer Terminal</span>
-                  <span>Type &apos;help&apos; for commands</span>
-                </div>
-                <DeveloperTerminal onOpenModalProject={(id) => setModalProjectId(id)} />
-              </div>
-            )}
+        {/* 02 — ABOUT & JOURNEY */}
+        <section id="about" className="scroll-mt-24">
+          <AboutSection />
+        </section>
 
-            {activeView === 'contact' && (
-              <div className="w-full max-w-3xl mx-auto space-y-12 py-4">
-                <ContactSection />
-                <SocialFooter />
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+        {/* 03 — TECHNICAL STACK */}
+        <section id="stack" className="scroll-mt-24">
+          <StackSection />
+        </section>
+
+        {/* 04 — CONTACT */}
+        <section id="contact" className="scroll-mt-24">
+          <ContactSection />
+        </section>
+
       </main>
 
-      {/* Minimal Footer */}
-      <footer className="w-full max-w-5xl mx-auto px-6 sm:px-8 py-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#62636C] font-sans select-none">
-        <div>© {new Date().getFullYear()} Sajal (Sam). Built with Next.js & TypeScript.</div>
-        <div className="flex items-center gap-4 text-[#9E9EA8]">
-          <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-          <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
-          <a href={profile.links.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Twitter</a>
-        </div>
-      </footer>
+      {/* ─── 3. FLOATING DEVDEX WIDGET (● 🎙 Talk to Sajal's DevDex) ─── */}
+      <DevDexWidget onOpenProject={(id) => setModalProjectId(id)} />
 
       {/* Focused Project Case Study Inspector Modal */}
       <ProjectModal

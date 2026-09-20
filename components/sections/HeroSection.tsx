@@ -1,175 +1,123 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { projects } from '@/data/projects';
-import { profile } from '@/data/profile';
-import { ArrowUpRight, ArrowDown, Terminal as TerminalIcon } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useSound } from '@/hooks/useSound';
 
 interface HeroSectionProps {
   onNavigateWork?: () => void;
   onNavigateContact?: () => void;
-  onOpenTerminal?: () => void;
 }
 
-export default function HeroSection({ onNavigateWork, onNavigateContact, onOpenTerminal }: HeroSectionProps) {
+export default function HeroSection({ onNavigateWork, onNavigateContact }: HeroSectionProps) {
   const { playClick, playHover } = useSound();
 
-  const techStack = [
-    'PyTorch',
-    'Next.js',
-    'FastAPI',
-    'LangGraph',
-    'Supabase',
-    'TypeScript',
-    'XGBoost',
-    'PostgreSQL',
-  ];
-
   return (
-    <div className="w-full space-y-20 sm:space-y-28 select-text">
+    <div className="w-full space-y-16 sm:space-y-24 select-text">
       
-      {/* ─── 1. CLEAN EDITORIAL HERO BANNER ─── */}
-      <section className="pt-8 sm:pt-16 max-w-4xl space-y-8">
+      {/* Availability Status Indicator */}
+      <div className="flex items-center gap-2.5 font-mono text-[11px] sm:text-xs tracking-wider text-[#8E8E93] uppercase">
+        <span className="w-2 h-2 rounded-full bg-[#EF4444] animate-pulse" />
+        <span className="text-[#F5F5F7] font-semibold">AVAILABLE FOR COLLABORATION</span>
+        <span className="text-white/20">/</span>
+        <span>INDIA</span>
+      </div>
+
+      {/* Main Hero Grid: Giant Typography (Left) + Orbital Radar (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         
-        {/* Name & Availability Pill */}
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="font-display text-lg sm:text-xl font-bold text-[#F4F4F6] tracking-tight">
-            Sajal (Sam)
-          </span>
-          <span className="text-white/20">·</span>
-          <span className="text-xs font-medium text-[#9E9EA8]">
-            NIT Jalandhar &apos;29
-          </span>
-          <span className="text-white/20">·</span>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs text-[#9E9EA8]">
-            <span className="w-2 h-2 rounded-full bg-[#30A46C] animate-pulse" />
-            <span className="text-[#F4F4F6] font-medium">Available for work & internships</span>
+        {/* Left: Signature Dual-Font Display Name */}
+        <div className="lg:col-span-8 space-y-0 select-none">
+          <h1 className="font-display font-bold text-6xl sm:text-8xl lg:text-[7.2rem] tracking-tight text-[#F5F5F7] leading-[0.9]">
+            Sajal
+          </h1>
+          <h1 className="font-serif-editorial italic font-normal text-6xl sm:text-8xl lg:text-[7.6rem] tracking-tight text-[#F5F5F7] leading-[0.95] -mt-1 sm:-mt-3">
+            Malhotra
+          </h1>
+        </div>
+
+        {/* Right: Orbital Radar System Graphic */}
+        <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-center relative">
+          <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
+            
+            {/* Concentric Orbital Rings */}
+            <svg className="w-full h-full text-white/[0.08]" viewBox="0 0 200 200" fill="none">
+              <ellipse cx="100" cy="100" rx="90" ry="60" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
+              <ellipse cx="100" cy="100" rx="65" ry="45" stroke="currentColor" strokeWidth="1" />
+              <ellipse cx="100" cy="100" rx="40" ry="28" stroke="currentColor" strokeWidth="1" />
+            </svg>
+
+            {/* Orbiting Red Particle */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            >
+              <div className="w-full h-full relative flex items-center justify-start">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444] shadow-[0_0_12px_#EF4444]" />
+              </div>
+            </motion.div>
+
+            {/* Orbiting Satellite Dots */}
+            <div className="absolute flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]/60" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444] shadow-[0_0_10px_#EF4444]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]/60" />
+            </div>
+
+            {/* System Label */}
+            <div className="absolute -bottom-6 right-0 font-mono text-[10px] text-[#636366] tracking-widest uppercase">
+              <span>SYSTEM [IDEAS INTO REAL SOFTWARE]</span>
+            </div>
           </div>
         </div>
 
-        {/* Main Impact Headline */}
-        <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold text-[#F4F4F6] tracking-tight leading-[1.08]">
-          Building intelligent products at the intersection of ML, software & design.
-        </h1>
+      </div>
 
-        {/* Value Proposition Subtitle */}
-        <p className="text-base sm:text-xl text-[#9E9EA8] max-w-2xl leading-relaxed font-sans">
-          I design and engineer production machine learning systems, adaptive financial reasoning engines, and delightful real-time web applications.
-        </p>
-
-        {/* Action Buttons & Links */}
-        <div className="flex flex-wrap items-center gap-4 pt-2 font-sans text-sm">
-          <button
-            onClick={() => {
-              playClick();
-              if (onNavigateWork) onNavigateWork();
-            }}
-            onMouseEnter={playHover}
-            className="px-6 py-3 rounded-full bg-[#F4F4F6] hover:bg-white text-[#090A0C] font-semibold tracking-tight transition-all hover:scale-105 shadow-md flex items-center gap-2 cursor-pointer"
-          >
-            <span>View Projects</span>
-            <ArrowDown size={15} />
-          </button>
-
-          <button
-            onClick={() => {
-              playClick();
-              if (onNavigateContact) onNavigateContact();
-            }}
-            onMouseEnter={playHover}
-            className="px-5 py-3 rounded-full bg-white/[0.04] border border-white/[0.1] hover:border-white/[0.25] text-[#F4F4F6] font-medium tracking-tight transition-all flex items-center gap-2 cursor-pointer"
-          >
-            <span>Get in touch</span>
-            <ArrowUpRight size={15} className="text-[#9E9EA8]" />
-          </button>
-
-          <button
-            onClick={() => {
-              playClick();
-              if (onOpenTerminal) onOpenTerminal();
-            }}
-            onMouseEnter={playHover}
-            className="px-4 py-3 rounded-full hover:bg-white/[0.04] text-[#9E9EA8] hover:text-[#F4F4F6] font-mono text-xs transition-colors flex items-center gap-2 cursor-pointer"
-          >
-            <TerminalIcon size={14} className="text-[#9E9EA8]" />
-            <span>Terminal mode</span>
-          </button>
-        </div>
-
-        {/* Glanceable Tech Stack Strip */}
-        <div className="pt-6 border-t border-white/[0.06] flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-mono text-[#9E9EA8]">
-          <span className="text-[#62636C] font-semibold">CORE STACK:</span>
-          {techStack.map((tech, idx) => (
-            <span key={tech} className="flex items-center gap-2">
-              <span className="text-[#F4F4F6]">{tech}</span>
-              {idx < techStack.length - 1 && <span className="text-white/10">·</span>}
-            </span>
-          ))}
-        </div>
-
-      </section>
-
-      {/* ─── 2. SELECTED PROJECTS TEASER ─── */}
-      <section className="space-y-6 pt-4">
+      {/* Bottom Bio Block */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-8 sm:pt-12 border-t border-white/[0.08] items-start">
         
-        <div className="flex items-center justify-between text-xs font-mono text-[#9E9EA8]">
-          <span className="font-semibold uppercase tracking-widest text-[#F4F4F6]">FEATURED WORK</span>
-          <button
-            onClick={() => {
-              playClick();
-              if (onNavigateWork) onNavigateWork();
-            }}
-            className="hover:text-[#F4F4F6] transition-colors flex items-center gap-1 cursor-pointer font-sans text-xs font-medium"
-          >
-            <span>View all projects</span>
-            <ArrowUpRight size={14} />
-          </button>
+        {/* Left Role Column */}
+        <div className="md:col-span-4 space-y-1 font-mono text-xs text-[#8E8E93] tracking-wider uppercase leading-relaxed">
+          <div>DEVELOPER / BUILDER</div>
+          <div className="text-white/20">/</div>
+          <div>CREATIVE</div>
+          <div>TECHNOLOGIST</div>
         </div>
 
-        {/* 3 Prominent Featured Project Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {projects.map((proj, idx) => (
-            <motion.div
-              key={proj.id}
+        {/* Right Main Bio Statement */}
+        <div className="md:col-span-8 space-y-6">
+          <p className="font-sans text-2xl sm:text-3xl lg:text-[2.1rem] text-[#F5F5F7] font-normal leading-snug tracking-tight">
+            I build products for the web, explore AI, and turn ideas into real software.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-4 pt-2 font-mono text-xs">
+            <button
               onClick={() => {
                 playClick();
                 if (onNavigateWork) onNavigateWork();
               }}
               onMouseEnter={playHover}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.2 }}
-              className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.18] hover:bg-white/[0.04] transition-all cursor-pointer flex flex-col justify-between group space-y-6 shadow-sm"
+              className="px-5 py-2.5 rounded-full bg-[#F5F5F7] hover:bg-white text-[#0A0B0D] font-bold tracking-tight transition-all flex items-center gap-1.5 cursor-pointer shadow-sm hover:scale-105"
             >
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between font-mono text-xs">
-                  <span className="text-[#62636C] font-semibold">0{idx + 1}</span>
-                  <span className="text-[#9E9EA8] group-hover:text-[#F4F4F6] transition-colors">
-                    {proj.tagline}
-                  </span>
-                </div>
+              <span>EXPLORE WORK</span>
+              <ArrowUpRight size={14} />
+            </button>
 
-                <h3 className="font-display text-2xl font-bold text-[#F4F4F6] group-hover:text-white transition-colors">
-                  {proj.name}
-                </h3>
-
-                <p className="text-xs sm:text-sm text-[#9E9EA8] font-sans leading-relaxed">
-                  {proj.description}
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs font-mono">
-                <span className="text-[#9E9EA8]">{proj.metric}</span>
-                <span className="text-[#F4F4F6] group-hover:text-white transition-colors flex items-center gap-1 font-sans font-medium">
-                  <span>Explore</span>
-                  <ArrowUpRight size={13} />
-                </span>
-              </div>
-            </motion.div>
-          ))}
+            <button
+              onClick={() => {
+                playClick();
+                if (onNavigateContact) onNavigateContact();
+              }}
+              onMouseEnter={playHover}
+              className="px-5 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-[#F5F5F7] font-medium tracking-tight transition-colors cursor-pointer"
+            >
+              <span>GET IN TOUCH</span>
+            </button>
+          </div>
         </div>
 
-      </section>
+      </div>
 
     </div>
   );
