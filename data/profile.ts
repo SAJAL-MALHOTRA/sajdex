@@ -1,3 +1,5 @@
+import { getAssetPath } from "@/utils/asset";
+
 export const profile = {
   id: "SM-NITJ-2029",
   name: "Sajal Malhotra",
@@ -55,7 +57,7 @@ export const profile = {
     twitter: "https://x.com/sajal",
     instagram: "https://instagram.com/sajal",
     email: "malhotrasajal243@gmail.com",
-    resume: "/resume.pdf",
+    resume: getAssetPath("/resume.pdf"),
   },
   // Backward compatibility
   audioGreeting: "Hi, I'm DevDex.",

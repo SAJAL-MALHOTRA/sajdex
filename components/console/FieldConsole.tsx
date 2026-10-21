@@ -11,7 +11,6 @@ import {
   Send,
   ShieldCheck,
   Terminal,
-  Volume2,
   X,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -34,8 +33,6 @@ export default function FieldConsole({
 }: FieldConsoleProps) {
   const [activeModule, setActiveModule] = useState<'systems' | 'skills' | 'timeline' | 'cli' | 'dispatch'>('systems');
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const [speechProgress, setSpeechProgress] = useState(0);
   const [isPhotoZoomed, setIsPhotoZoomed] = useState(false);
   const [dispatchSent, setDispatchSent] = useState(false);
   const [senderName, setSenderName] = useState('');
@@ -59,51 +56,6 @@ export default function FieldConsole({
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-  // Web Speech API Voice Briefing Engine
-  const handleToggleVoice = () => {
-    playClick();
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-
-    if (isPlayingAudio) {
-      window.speechSynthesis.cancel();
-      setIsPlayingAudio(false);
-      setSpeechProgress(0);
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-    const textToSpeak = profile.transcript;
-
-    const utterance = new SpeechSynthesisUtterance(textToSpeak);
-    utterance.rate = 1.0;
-    utterance.pitch = 0.95;
-
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(
-      (v) => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Daniel') || v.name.includes('Alex'))
-    ) || voices.find((v) => v.lang.startsWith('en'));
-
-    if (preferredVoice) utterance.voice = preferredVoice;
-
-    utterance.onboundary = (e) => {
-      const pct = Math.min(100, Math.round((e.charIndex / textToSpeak.length) * 100));
-      setSpeechProgress(pct);
-    };
-
-    utterance.onend = () => {
-      setIsPlayingAudio(false);
-      setSpeechProgress(100);
-      setTimeout(() => setSpeechProgress(0), 1200);
-    };
-
-    utterance.onerror = () => {
-      setIsPlayingAudio(false);
-      setSpeechProgress(0);
-    };
-
-    setIsPlayingAudio(true);
-    window.speechSynthesis.speak(utterance);
-  };
 
   // Keyboard number keys to quickly switch modules (1-5) and Escape to close zoom
   useEffect(() => {
@@ -151,19 +103,6 @@ export default function FieldConsole({
           </div>
 
           <div className="flex items-center gap-2 text-[10px]">
-            <button
-              onClick={handleToggleVoice}
-              onMouseEnter={playHover}
-              className={`flex items-center gap-1 px-2 py-0.5 rounded border transition-colors cursor-pointer ${
-                isPlayingAudio
-                  ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white font-bold'
-                  : 'bg-[#F1F2F5] hover:bg-[#E8EAEE] border-[#D1D5DB] text-[#52525B] hover:text-[#09090B] dark:bg-[#16171B] dark:border-[#2B2D35] dark:text-[#A1A1AA] dark:hover:text-white'
-              }`}
-            >
-              <Volume2 size={10} />
-              <span>{isPlayingAudio ? 'AUDIO ON' : 'AUDIO BRIEF'}</span>
-            </button>
-
             <button
               onClick={() => {
                 playClick();
@@ -392,10 +331,9 @@ export default function FieldConsole({
           </div>
 
           {/* ════════ RIGHT PANEL: ACTIVE TELEMETRY PANE (7 Cols) ════════ */}
-          <div className="lg:col-span-7 rounded-xl bg-[#F9F9FB] dark:bg-[#0B0C0E] border border-[#E2E4E8] dark:border-[#1E2026] p-3 sm:p-4 overflow-y-auto h-full min-h-0 flex flex-col justify-between space-y-3 text-left transition-colors">
+          <div className="lg:col-span-7 rounded-xl bg-[#F9F9FB] dark:bg-[#0B0C0E] border border-[#E2E4E8] dark:border-[#1E2026] p-3 sm:p-4 overflow-y-auto h-full min-h-0 flex flex-col space-y-3 text-left transition-colors">
             
-            <div className="space-y-3 h-full flex flex-col">
-              {/* Terminal Command Prompt Header */}
+            {/* Terminal Command Prompt Header */}
               <div className="flex items-center justify-between text-xs text-[#71717A] pb-2 border-b border-[#E2E4E8] dark:border-[#1E2026] shrink-0">
                 <div className="flex items-center gap-2">
                   <span className="text-[#52525B] dark:text-[#A1A1AA] font-mono text-[11px]">sajal@nitj:~/resume $</span>
@@ -695,9 +633,10 @@ export default function FieldConsole({
                     </button>
 
                     <a
-                      href="/resume.pdf"
+                      href={getAssetPath('/resume.pdf')}
                       target="_blank"
                       rel="noreferrer"
+                      download="Sajal_Malhotra_Resume.pdf"
                       onMouseEnter={playHover}
                       className="p-2.5 rounded-lg bg-white dark:bg-[#121316] hover:bg-[#F4F4F6] dark:hover:bg-[#18181B] border border-[#E2E4E8] dark:border-[#22242B] text-[#09090B] dark:text-white font-mono text-xs flex items-center justify-between transition-colors cursor-pointer shadow-xs"
                     >
@@ -802,23 +741,6 @@ export default function FieldConsole({
                   </form>
                 </div>
               )}
-            </div>
-
-            {/* Public Signal Relays Footer */}
-            <div className="pt-2 border-t border-[#E2E4E8] dark:border-[#1E2026] flex items-center justify-between text-[10px] text-[#71717A] shrink-0">
-              <span className="text-[8.5px] tracking-wider uppercase font-mono">CONTACT // RELAYS:</span>
-              <div className="flex items-center gap-3 font-mono">
-                <a href={profile.links.github} target="_blank" rel="noreferrer" className="text-[#52525B] hover:text-[#09090B] dark:text-[#A1A1AA] dark:hover:text-white transition-colors">
-                  GitHub ↗
-                </a>
-                <a href={profile.links.linkedin} target="_blank" rel="noreferrer" className="text-[#52525B] hover:text-[#09090B] dark:text-[#A1A1AA] dark:hover:text-white transition-colors">
-                  LinkedIn ↗
-                </a>
-                <a href={`mailto:${profile.email}`} className="text-[#52525B] hover:text-[#09090B] dark:text-[#A1A1AA] dark:hover:text-white transition-colors">
-                  Email ↗
-                </a>
-              </div>
-            </div>
 
           </div>
 
