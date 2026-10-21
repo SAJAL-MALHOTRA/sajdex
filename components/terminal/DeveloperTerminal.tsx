@@ -5,6 +5,7 @@ import { projects } from '@/data/projects';
 import { profile } from '@/data/profile';
 import { skills } from '@/data/skills';
 import { experiences } from '@/data/experience';
+import { fits } from '@/data/fits';
 import { Terminal as TerminalIcon } from 'lucide-react';
 import { useSound } from '@/hooks/useSound';
 
@@ -181,6 +182,34 @@ export default function DeveloperTerminal({ onOpenModalProject }: DeveloperTermi
           ))}
         </div>
       );
+    } else if (lowerCmd === 'fits' || lowerCmd === 'lookbook') {
+      responseNode = (
+        <div className="space-y-2 pt-1 font-mono text-xs">
+          <div className="font-semibold text-white">Curated Lookbook Archive (SS26 / FW25)</div>
+          <div className="space-y-1">
+            {fits.map((f) => (
+              <div key={f.id} className="flex justify-between items-center text-[#9E9EA8]">
+                <span>
+                  <span className="text-white font-medium">{f.id}</span> {f.title}
+                </span>
+                <span className="text-amber-400 font-mono">{f.season}</span>
+              </div>
+            ))}
+          </div>
+          <div className="text-[#62636C] text-[11px] pt-1">
+            Scroll to Lookbook section to inspect complete garment breakdown.
+          </div>
+        </div>
+      );
+    } else if (lowerCmd === 'rotation') {
+      responseNode = (
+        <div className="space-y-2 pt-1 font-mono text-xs">
+          <div className="font-semibold text-white">Current Rotation // SS26</div>
+          <div className="text-[#9E9EA8]"><span className="text-emerald-400 font-bold">On the Desk:</span> {profile.rotation.building}</div>
+          <div className="text-[#9E9EA8]"><span className="text-amber-400 font-bold">On the Rack:</span> {profile.rotation.wearing}</div>
+          <div className="text-[#9E9EA8]"><span className="text-white font-bold">Audio Track:</span> {profile.rotation.listening}</div>
+        </div>
+      );
     } else if (lowerCmd === 'help') {
       responseNode = (
         <div className="space-y-1 text-xs text-[#9E9EA8]">
@@ -188,6 +217,8 @@ export default function DeveloperTerminal({ onOpenModalProject }: DeveloperTermi
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1">
             <div><span className="text-white">whoami</span> — Identity & bio</div>
             <div><span className="text-white">projects</span> — Shipped systems</div>
+            <div><span className="text-white">fits</span> — Curated wardrobe lookbook</div>
+            <div><span className="text-white">rotation</span> — Current active rotation</div>
             <div><span className="text-white">skills</span> — Tech stack</div>
             <div><span className="text-white">experience</span> — Career timeline</div>
             <div><span className="text-white">open [ID]</span> — Inspect project modal</div>
@@ -262,7 +293,7 @@ export default function DeveloperTerminal({ onOpenModalProject }: DeveloperTermi
       <div className="absolute bottom-3 left-6 right-6 border-t border-white/[0.06] pt-3 bg-[#111216]">
         <div className="flex items-center gap-2 text-xs">
           <span className="text-[#62636C] text-[11px]">Commands:</span>
-          {['whoami', 'projects', 'skills', 'experience', 'help'].map((cmd) => (
+          {['whoami', 'projects', 'fits', 'rotation', 'skills', 'experience', 'help'].map((cmd) => (
             <button
               key={cmd}
               onClick={(e) => {

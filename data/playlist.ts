@@ -20,7 +20,7 @@ export const playlist: Track[] = [
     category: 'VIBES',
     spotifyUrl: 'https://open.spotify.com/search/Akhiyan%20Harkirat%20Sangha',
     coverGradient: 'from-blue-600 to-indigo-900',
-    audioUrl: '/audio/track-01.mp3',
+    audioUrl: '/audio/track-01.webm',
   },
   {
     id: 'track-02',
@@ -31,7 +31,7 @@ export const playlist: Track[] = [
     category: 'LATE NIGHT R&B',
     spotifyUrl: 'https://open.spotify.com/search/Come%20and%20See%20Me%20Drake',
     coverGradient: 'from-[#FF1A1A] to-purple-950',
-    audioUrl: '/audio/track-02.mp3',
+    audioUrl: '/audio/track-02.webm',
   },
   {
     id: 'track-03',
@@ -42,7 +42,7 @@ export const playlist: Track[] = [
     category: 'TRAP / BUILDER',
     spotifyUrl: 'https://open.spotify.com/search/Break%20Da%20Law%2021%20Savage',
     coverGradient: 'from-emerald-600 to-teal-950',
-    audioUrl: '/audio/track-03.mp3',
+    audioUrl: '/audio/track-03.webm',
   },
   {
     id: 'track-04',
@@ -53,7 +53,7 @@ export const playlist: Track[] = [
     category: 'INDIE ROCK',
     spotifyUrl: 'https://open.spotify.com/search/Do%20I%20Wanna%20Know%20Arctic%20Monkeys',
     coverGradient: 'from-neutral-700 to-zinc-950',
-    audioUrl: '/audio/track-04.mp3',
+    audioUrl: '/audio/track-04.webm',
   },
   {
     id: 'track-05',
@@ -64,7 +64,7 @@ export const playlist: Track[] = [
     category: 'ANTHEM',
     spotifyUrl: 'https://open.spotify.com/search/Pokemon%20Theme%20Song',
     coverGradient: 'from-red-600 to-yellow-600',
-    audioUrl: '/audio/track-05.mp3',
+    audioUrl: '/audio/track-05.webm',
   },
   {
     id: 'track-06',
@@ -75,6 +75,6 @@ export const playlist: Track[] = [
     category: 'PUNJABI / HIP-HOP',
     spotifyUrl: 'https://open.spotify.com/search/48%20Rhymes%20Karan%20Aujla',
     coverGradient: 'from-amber-600 to-red-900',
-    audioUrl: '/audio/track-06.mp3',
+    audioUrl: '/audio/track-06.webm',
   },
 ];

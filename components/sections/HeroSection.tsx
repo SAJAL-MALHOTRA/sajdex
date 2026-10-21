@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useSound } from '@/hooks/useSound';
@@ -11,110 +12,149 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onNavigateWork, onNavigateContact }: HeroSectionProps) {
   const { playClick, playHover } = useSound();
+  const [timeStr, setTimeStr] = useState('18:34:34');
+
+  // Real-time ticking clock for the broadsheet ribbon
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      setTimeStr(`${hours}:${minutes}:${seconds}`);
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="w-full space-y-16 sm:space-y-24 select-text">
+    <div className="w-full space-y-0 select-text border border-[#202123] rounded-lg overflow-hidden bg-[#0C0D0F]">
       
-      {/* Availability Status Indicator */}
-      <div className="flex items-center gap-2.5 font-mono text-[11px] sm:text-xs tracking-wider text-[#8E8E93] uppercase">
-        <span className="w-2 h-2 rounded-full bg-[#EF4444] animate-pulse" />
-        <span className="text-[#F5F5F7] font-semibold">AVAILABLE FOR COLLABORATION</span>
-        <span className="text-white/20">/</span>
-        <span>INDIA</span>
+      {/* ─── 1. BROADSHEET METADATA STATUS RIBBON ─── */}
+      <div className="grid grid-cols-2 md:grid-cols-4 border-b border-[#202123] font-mono text-[11px] text-[#8C8D8A] bg-[#0A0B0D]">
+        <div className="px-4 py-2.5 border-r border-[#202123] flex items-center gap-2">
+          <span className="text-[#555755]">ISSUE:</span>
+          <span className="text-[#F2F1ED] font-bold">VOL. 01</span>
+        </div>
+
+        <div className="px-4 py-2.5 md:border-r border-[#202123] flex items-center gap-2">
+          <span className="text-[#555755]">DATE:</span>
+          <span className="text-[#F2F1ED]">SEP 20, 2026</span>
+        </div>
+
+        <div className="px-4 py-2.5 border-r border-t md:border-t-0 border-[#202123] flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#D85A38] animate-pulse" />
+          <span className="text-[#F2F1ED] font-semibold">LIVE SYNC — GITHUB</span>
+        </div>
+
+        <div className="px-4 py-2.5 border-t md:border-t-0 border-[#202123] flex items-center justify-between">
+          <span className="text-[#555755]">IST:</span>
+          <span className="text-[#F2F1ED] font-mono font-medium">GMT+05:30 {timeStr}</span>
+        </div>
       </div>
 
-      {/* Main Hero Grid: Giant Typography (Left) + Orbital Radar (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      {/* ─── 2. THE EDITORIAL HERO SPLIT ─── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12">
         
-        {/* Left: Signature Dual-Font Display Name */}
-        <div className="lg:col-span-8 space-y-0 select-none">
-          <h1 className="font-display font-bold text-6xl sm:text-8xl lg:text-[7.2rem] tracking-tight text-[#F5F5F7] leading-[0.9]">
-            Sajal
-          </h1>
-          <h1 className="font-serif-editorial italic font-normal text-6xl sm:text-8xl lg:text-[7.6rem] tracking-tight text-[#F5F5F7] leading-[0.95] -mt-1 sm:-mt-3">
-            Malhotra
-          </h1>
-        </div>
+        {/* Left Column (Approx 65% width with right border) */}
+        <div className="lg:col-span-8 p-6 sm:p-10 lg:p-12 lg:border-r border-[#202123] space-y-8 flex flex-col justify-between">
+          
+          {/* Subheader */}
+          <div className="flex items-center gap-3 font-mono text-[11px] text-[#8C8D8A] tracking-wider uppercase">
+            <span className="text-[#D85A38] font-bold">01 / PREMISE</span>
+            <span className="text-[#555755]">—</span>
+            <span>FOR BUILDERS, BY BUILDERS</span>
+          </div>
 
-        {/* Right: Orbital Radar System Graphic */}
-        <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-center relative">
-          <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
-            
-            {/* Concentric Orbital Rings */}
-            <svg className="w-full h-full text-white/[0.08]" viewBox="0 0 200 200" fill="none">
-              <ellipse cx="100" cy="100" rx="90" ry="60" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-              <ellipse cx="100" cy="100" rx="65" ry="45" stroke="currentColor" strokeWidth="1" />
-              <ellipse cx="100" cy="100" rx="40" ry="28" stroke="currentColor" strokeWidth="1" />
-            </svg>
+          {/* Giant Broadsheet Headline */}
+          <div className="space-y-0 select-none">
+            <h1 className="font-serif-editorial font-bold text-6xl sm:text-7xl lg:text-8xl tracking-tight text-[#F2F1ED] leading-[0.92]">
+              Building
+            </h1>
+            <h1 className="font-serif-editorial italic font-normal text-6xl sm:text-7xl lg:text-8xl tracking-tight text-[#D85A38] leading-[0.96] -my-1 sm:-my-2">
+              Functional
+            </h1>
+            <h1 className="font-serif-editorial font-bold text-6xl sm:text-7xl lg:text-8xl tracking-tight text-[#F2F1ED] leading-[0.92]">
+              Projects.
+            </h1>
+          </div>
 
-            {/* Orbiting Red Particle */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            >
-              <div className="w-full h-full relative flex items-center justify-start">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444] shadow-[0_0_12px_#EF4444]" />
-              </div>
-            </motion.div>
-
-            {/* Orbiting Satellite Dots */}
-            <div className="absolute flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]/60" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444] shadow-[0_0_10px_#EF4444]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]/60" />
+          {/* Footer of Left Column: Identity Metadata & Actions */}
+          <div className="pt-6 border-t border-[#202123] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="font-mono text-xs text-[#8C8D8A] space-y-0.5">
+              <div className="text-[#F2F1ED] font-bold">SAJAL MALHOTRA (SAM)</div>
+              <div className="text-[11px] text-[#555755]">DEVELOPER / BUILDER / CREATIVE TECHNOLOGIST</div>
             </div>
 
-            {/* System Label */}
-            <div className="absolute -bottom-6 right-0 font-mono text-[10px] text-[#636366] tracking-widest uppercase">
-              <span>SYSTEM [IDEAS INTO REAL SOFTWARE]</span>
+            <div className="flex items-center gap-3 font-mono text-xs">
+              <button
+                onClick={() => {
+                  playClick();
+                  if (onNavigateWork) onNavigateWork();
+                }}
+                onMouseEnter={playHover}
+                className="px-4 py-2 rounded bg-[#F2F1ED] hover:bg-white text-[#08090B] font-bold tracking-tight transition-all flex items-center gap-1.5 cursor-pointer shadow-sm hover:scale-[1.02]"
+              >
+                <span>EXPLORE WORK</span>
+                <ArrowUpRight size={13} className="text-[#D85A38]" />
+              </button>
+
+              <button
+                onClick={() => {
+                  playClick();
+                  if (onNavigateContact) onNavigateContact();
+                }}
+                onMouseEnter={playHover}
+                className="px-4 py-2 rounded bg-[#111214] hover:bg-[#16181B] border border-[#202123] text-[#F2F1ED] font-medium transition-colors cursor-pointer"
+              >
+                <span>CONTACT</span>
+              </button>
             </div>
           </div>
+
         </div>
 
-      </div>
+        {/* Right Column (Approx 35% width: Abstract & Counters) */}
+        <div className="lg:col-span-4 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-8 bg-[#0A0B0D]">
+          
+          <div className="space-y-4">
+            <div className="font-mono text-[11px] text-[#555755] uppercase tracking-wider">
+              ABSTRACT
+            </div>
 
-      {/* Bottom Bio Block */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-8 sm:pt-12 border-t border-white/[0.08] items-start">
-        
-        {/* Left Role Column */}
-        <div className="md:col-span-4 space-y-1 font-mono text-xs text-[#8E8E93] tracking-wider uppercase leading-relaxed">
-          <div>DEVELOPER / BUILDER</div>
-          <div className="text-white/20">/</div>
-          <div>CREATIVE</div>
-          <div>TECHNOLOGIST</div>
-        </div>
+            <p className="font-serif-editorial text-lg sm:text-xl text-[#F2F1ED] leading-relaxed">
+              An initiative for the NIT Jalandhar community to build, share, and scale <span className="italic text-[#D85A38]">open-source code</span> — written by a student, used by real people, maintained in public.
+            </p>
 
-        {/* Right Main Bio Statement */}
-        <div className="md:col-span-8 space-y-6">
-          <p className="font-sans text-2xl sm:text-3xl lg:text-[2.1rem] text-[#F5F5F7] font-normal leading-snug tracking-tight">
-            I build products for the web, explore AI, and turn ideas into real software.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-4 pt-2 font-mono text-xs">
-            <button
-              onClick={() => {
-                playClick();
-                if (onNavigateWork) onNavigateWork();
-              }}
-              onMouseEnter={playHover}
-              className="px-5 py-2.5 rounded-full bg-[#F5F5F7] hover:bg-white text-[#0A0B0D] font-bold tracking-tight transition-all flex items-center gap-1.5 cursor-pointer shadow-sm hover:scale-105"
-            >
-              <span>EXPLORE WORK</span>
-              <ArrowUpRight size={14} />
-            </button>
-
-            <button
-              onClick={() => {
-                playClick();
-                if (onNavigateContact) onNavigateContact();
-              }}
-              onMouseEnter={playHover}
-              className="px-5 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-[#F5F5F7] font-medium tracking-tight transition-colors cursor-pointer"
-            >
-              <span>GET IN TOUCH</span>
-            </button>
+            <p className="font-sans text-xs sm:text-sm text-[#8C8D8A] leading-relaxed pt-2 border-t border-[#202123]">
+              Currently engineering real-time multimodal applications, Bayesian student knowledge tracing, and distributed multi-agent systems at the Department of IT, NIT Jalandhar.
+            </p>
           </div>
+
+          {/* Quick Metrics Grid at Bottom of Right Column */}
+          <div className="grid grid-cols-2 gap-3 pt-6 border-t border-[#202123] font-mono">
+            <div className="p-3 rounded bg-[#0C0D0F] border border-[#202123] space-y-1">
+              <span className="text-[10px] text-[#555755] uppercase block">SYSTEMS</span>
+              <span className="text-xl font-bold text-[#F2F1ED]">03</span>
+            </div>
+
+            <div className="p-3 rounded bg-[#0C0D0F] border border-[#202123] space-y-1">
+              <span className="text-[10px] text-[#555755] uppercase block">ACCURACY</span>
+              <span className="text-xl font-bold text-[#D85A38]">R² 0.927</span>
+            </div>
+
+            <div className="p-3 rounded bg-[#0C0D0F] border border-[#202123] space-y-1">
+              <span className="text-[10px] text-[#555755] uppercase block">LATENCY</span>
+              <span className="text-xl font-bold text-[#F2F1ED]">&lt;50ms</span>
+            </div>
+
+            <div className="p-3 rounded bg-[#0C0D0F] border border-[#202123] space-y-1">
+              <span className="text-[10px] text-[#555755] uppercase block">CAMPUS</span>
+              <span className="text-xs font-bold text-[#8C8D8A] leading-tight block pt-1">NIT JALANDHAR</span>
+            </div>
+          </div>
+
         </div>
 
       </div>

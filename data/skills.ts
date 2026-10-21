@@ -7,19 +7,23 @@ export const skills = {
   categories: [
     {
       title: "LANGUAGES",
-      items: ["Python", "C++", "JavaScript", "TypeScript"],
+      items: ["Python", "C++", "JavaScript", "TypeScript", "SQL", "Bash"],
     },
     {
-      title: "FRAMEWORKS",
-      items: ["Next.js", "React", "FastAPI", "Streamlit", "LangChain"],
+      title: "ML & AI",
+      items: ["PyTorch", "XGBoost", "scikit-learn", "LangGraph", "LangChain", "HuggingFace (FinBERT)", "OpenCV"],
     },
     {
-      title: "ML / AI STACK",
-      items: ["PyTorch", "scikit-learn", "LangGraph", "ChromaDB", "NumPy", "Pandas"],
+      title: "BACKEND & WEB",
+      items: ["FastAPI", "Next.js", "React", "Node.js", "Express.js", "Tailwind CSS", "REST APIs"],
     },
     {
-      title: "DATABASES",
-      items: ["Supabase", "PostgreSQL", "SQLite", "pgvector"],
+      title: "DATABASES & STORAGE",
+      items: ["PostgreSQL", "Supabase", "pgvector", "Redis", "SQLite", "SQLAlchemy"],
+    },
+    {
+      title: "TOOLS & INFRASTRUCTURE",
+      items: ["Docker", "Git/GitHub", "Linux (Arch Linux)", "Postman", "Alembic", "CI/CD"],
     },
   ] as SkillCategory[],
 };

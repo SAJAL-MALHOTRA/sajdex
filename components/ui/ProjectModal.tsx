@@ -45,7 +45,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           <div className="flex items-start justify-between border-b border-white/10 pb-4 gap-4">
             <div>
               <div className="flex items-center gap-3 mb-1.5 font-mono">
-                <span className="text-xs font-bold text-[#EF4444]">
+                <span className="text-xs font-bold text-[#D4A373]">
                   #{project.id}
                 </span>
                 <span className="text-[10px] bg-[#111317] border border-white/10 text-[#30D158] font-bold px-2.5 py-0.5 rounded-full">
@@ -85,7 +85,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           <div className="space-y-4 pt-2 border-t border-white/10">
             {project.problem && (
               <div className="space-y-1">
-                <span className="font-mono text-[10px] text-[#EF4444] font-bold uppercase block">
+                <span className="font-mono text-[10px] text-[#D4A373] font-bold uppercase block">
                   PROBLEM STATEMENT:
                 </span>
                 <p className="text-xs text-[#F8FAFC] leading-relaxed">
@@ -96,7 +96,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
             {project.solution && (
               <div className="space-y-1">
-                <span className="font-mono text-[10px] text-[#EF4444] font-bold uppercase block">
+                <span className="font-mono text-[10px] text-[#D4A373] font-bold uppercase block">
                   TECHNICAL SOLUTION:
                 </span>
                 <p className="text-xs text-[#F8FAFC] leading-relaxed">
@@ -115,7 +115,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <div className="flex flex-wrap gap-2">
                 {project.abilities.map((a) => (
                   <span key={a} className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#111317] border border-white/10 text-xs text-[#F8FAFC] rounded-lg">
-                    <ShieldCheck size={12} className="text-[#EF4444]" />
+                    <ShieldCheck size={12} className="text-[#D4A373]" />
                     <span>{a}</span>
                   </span>
                 ))}

@@ -1,42 +1,31 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, IBM_Plex_Mono, Inter, Newsreader } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["500", "700"],
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500", "600"],
-});
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
-const newsreader = Newsreader({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-serif",
-  style: ["normal", "italic"],
+  variable: "--font-mono",
   weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "SAJAL / SAJDEX — Developer, Builder & Creative Technologist",
+  title: "SAJAL MALHOTRA // SYSTEMS ARCHITECTURE",
   description:
-    "I build products for the web, explore AI, and turn ideas into real software.",
+    "Engineering portfolio for Sajal Malhotra. High-concurrency distributed systems, real-time WebSocket architecture, and technical sartorial curation at NIT Jalandhar.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} ${inter.variable} ${newsreader.variable}`}>
-      <body className="min-h-screen bg-[#08090B] text-[#F8FAFC] antialiased selection:bg-[#EF4444] selection:text-white font-sans">
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark`}>
+      <body className="min-h-screen bg-[#09090B] text-[#EDEDED] font-mono antialiased selection:bg-white selection:text-black overflow-x-hidden">
         {children}
       </body>
     </html>

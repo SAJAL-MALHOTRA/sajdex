@@ -9,59 +9,69 @@ export default function ContactSection() {
   const { playClick, playHover } = useSound();
 
   const links = [
-    { label: profile.links.email, url: `mailto:${profile.links.email}` },
-    { label: 'GitHub', url: profile.links.github },
-    { label: 'LinkedIn', url: profile.links.linkedin },
-    { label: 'Twitter', url: profile.links.twitter },
+    { label: 'Email', value: profile.links.email, url: `mailto:${profile.links.email}` },
+    { label: 'GitHub', value: 'github.com/sajal', url: profile.links.github },
+    { label: 'LinkedIn', value: 'linkedin.com/in/sajal', url: profile.links.linkedin },
+    { label: 'X', value: '@sajal', url: profile.links.twitter },
   ];
 
   return (
     <div className="w-full space-y-12 select-text">
       
-      {/* Section 04 Header */}
-      <div className="border-b border-white/[0.08] pb-4 font-mono text-xs text-[#8E8E93]">
-        <span className="text-[#EF4444] font-bold">04 —</span>
+      {/* ─── SECTION HEADER ─── */}
+      <div className="border-b border-[#202123] pb-4 font-mono text-xs text-[#8C8D8A]">
+        <span className="text-[#E5484D] font-bold">04 —</span>
       </div>
 
-      {/* Main Grid: Headline (Left) + Links (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      {/* ─── MAIN GRID: HEADLINE (LEFT) + PARAGRAPH & LINKS (RIGHT) ─── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         
-        {/* Left: Signature Dual-Font Call to Action */}
-        <div className="lg:col-span-8 space-y-0 select-none">
-          <h2 className="font-display font-bold text-5xl sm:text-7xl lg:text-[5.5rem] tracking-tight text-[#F5F5F7] leading-[0.95]">
+        {/* Left: Oversized Emotional Statement */}
+        <div className="lg:col-span-7 space-y-0 select-none">
+          <h2 className="font-display font-bold text-5xl sm:text-7xl lg:text-[5.4rem] tracking-tight text-[#F2F1ED] leading-[0.94]">
             Let&apos;s make
           </h2>
-          <h2 className="font-serif-editorial italic font-normal text-5xl sm:text-7xl lg:text-[5.8rem] tracking-tight text-[#F5F5F7] leading-[0.95]">
+          <h2 className="font-serif-editorial italic font-normal text-5xl sm:text-7xl lg:text-[5.7rem] tracking-tight text-[#F2F1ED] leading-[0.96] -mt-1 sm:-mt-2">
             something useful.
           </h2>
         </div>
 
-        {/* Right: Direct Link List */}
-        <div className="lg:col-span-4 space-y-4 pt-2">
-          {links.map((link) => (
-            <motion.a
-              key={link.label}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={playClick}
-              onMouseEnter={playHover}
-              className="flex items-center justify-between py-2 text-base font-sans text-[#8E8E93] hover:text-[#F5F5F7] transition-colors border-b border-white/[0.04] group cursor-pointer"
-            >
-              <span>{link.label}</span>
-              <ArrowUpRight
-                size={16}
-                className="text-[#636366] group-hover:text-[#EF4444] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
-              />
-            </motion.a>
-          ))}
+        {/* Right: Narrative & Direct Channel Links */}
+        <div className="lg:col-span-5 space-y-6 pt-2">
+          <p className="font-sans text-base sm:text-lg text-[#8C8D8A] leading-relaxed">
+            Always open to thoughtful conversations, collaborations, and new opportunities.
+          </p>
+
+          <div className="space-y-1 border-t border-[#202123] pt-4 font-mono text-xs">
+            {links.map((link) => (
+              <motion.a
+                key={link.label}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={playClick}
+                onMouseEnter={playHover}
+                className="flex items-center justify-between py-2.5 text-[#8C8D8A] hover:text-[#F2F1ED] transition-colors border-b border-[#202123]/60 group cursor-pointer"
+              >
+                <span className="font-medium text-sm font-sans">{link.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] text-[#555755] hidden sm:inline">{link.value}</span>
+                  <ArrowUpRight
+                    size={14}
+                    className="text-[#555755] group-hover:text-[#E5484D] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+                  />
+                </div>
+              </motion.a>
+            ))}
+          </div>
         </div>
 
       </div>
 
-      {/* Bottom Copyright */}
-      <div className="pt-12 border-t border-white/[0.06] font-mono text-[11px] text-[#636366] tracking-wider uppercase">
+      {/* ─── BOTTOM METADATA COPYRIGHT ─── */}
+      <div className="pt-10 border-t border-[#202123] flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[11px] text-[#555755] uppercase tracking-wider">
         <span>© {new Date().getFullYear()} SAJAL MALHOTRA / ALL RIGHTS RESERVED</span>
+        <span>DEVDEX WORKSTATION // RELEASE 2026.1</span>
       </div>
 
     </div>
