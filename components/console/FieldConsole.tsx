@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Check,
   Copy,
@@ -40,6 +40,17 @@ export default function FieldConsole({
   const [dispatchMessage, setDispatchMessage] = useState('');
 
   const { playClick, playHover } = useSound();
+  const rightPanelRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectModule = (id: 'systems' | 'skills' | 'timeline' | 'cli' | 'dispatch') => {
+    playClick();
+    setActiveModule(id);
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setTimeout(() => {
+        rightPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    }
+  };
 
   const modules = [
     { id: 'systems', num: '01', title: 'TECHNICAL PROJECTS', count: '04 BUILDS' },
@@ -77,10 +88,10 @@ export default function FieldConsole({
   }, [isPhotoZoomed]);
 
   return (
-    <div className="w-full h-full max-h-full flex flex-col justify-between select-none font-mono text-[#09090B] dark:text-[#EDEDED] transition-colors duration-200">
+    <div className="w-full h-full lg:max-h-full flex flex-col justify-between select-none font-mono text-[#09090B] dark:text-[#EDEDED] transition-colors duration-200">
       
       {/* ── MAIN HARDWARE CHASSIS ── */}
-      <div className="w-full h-full flex flex-col justify-between rounded-2xl bg-white dark:bg-[#0E0F12] border border-[#E2E4E8] dark:border-[#22242A] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9)] p-2.5 sm:p-3.5 overflow-hidden transition-colors duration-200">
+      <div className="w-full h-full flex flex-col justify-between rounded-2xl bg-white dark:bg-[#0E0F12] border border-[#E2E4E8] dark:border-[#22242A] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9)] p-2.5 sm:p-3.5 overflow-visible lg:overflow-hidden transition-colors duration-200">
         
         {/* Top Hardware Header */}
         <div className="flex items-center justify-between pb-2 px-1 border-b border-[#ECEEF2] dark:border-[#1E2026] text-xs text-[#52525B] dark:text-[#71717A] shrink-0">
@@ -92,11 +103,11 @@ export default function FieldConsole({
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-[#09090B] dark:text-white font-semibold tracking-wider text-[11px]">
+              <span className="text-[#09090B] dark:text-white font-semibold tracking-wider text-[10.5px] sm:text-[11px] truncate">
                 SAJAL MALHOTRA // NIT JALANDHAR
               </span>
               <span className="text-[#CBD0D8] dark:text-white/20 hidden sm:inline">•</span>
-              <span className="text-[10px] text-[#52525B] dark:text-[#A1A1AA] hidden sm:inline">
+              <span className="text-[10px] text-[#52525B] dark:text-[#A1A1AA] hidden sm:inline truncate">
                 B.TECH IT · 2025–2029 (CGPA: 8.13)
               </span>
             </div>
@@ -106,7 +117,7 @@ export default function FieldConsole({
             <button
               onClick={() => {
                 playClick();
-                setActiveModule('cli');
+                handleSelectModule('cli');
               }}
               onMouseEnter={playHover}
               className={`flex items-center gap-1 px-2 py-0.5 rounded border transition-colors cursor-pointer text-[10px] ${
@@ -122,10 +133,10 @@ export default function FieldConsole({
         </div>
 
         {/* ── TWO-PANEL HARDWARE WORKSPACE (FLEX-1 MIN-H-0 TO FIT IN VIEWPORT) ── */}
-        <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-3 pt-2.5 overflow-hidden">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3 pt-2.5 lg:min-h-0 overflow-visible lg:overflow-hidden">
           
           {/* ════════ LEFT PANEL: OPERATOR SPEC & MODULE SELECTOR (5 Cols) ════════ */}
-          <div className="lg:col-span-5 flex flex-col justify-between h-full min-h-0 space-y-2 overflow-y-auto pr-0.5">
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-2 lg:h-full lg:min-h-0 lg:overflow-y-auto pr-0 lg:pr-0.5">
             
             {/* Operator Identity & Verified Stamp Card (Enlarged Upper Section to Fill Space) */}
             <div className="rounded-xl bg-[#F9F9FB] dark:bg-[#131418] border border-[#E2E4E8] dark:border-[#22242B] p-3.5 sm:p-4 space-y-3.5 shrink-0 shadow-sm dark:shadow-lg transition-colors">
@@ -141,7 +152,7 @@ export default function FieldConsole({
                   }}
                   onMouseEnter={playHover}
                   title="Click to view full portrait"
-                  className="group relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 rounded-xl bg-[#F1F2F5] dark:bg-[#0A0B0E] border border-black/15 hover:border-black/60 dark:border-white/20 dark:hover:border-white/70 overflow-hidden flex items-center justify-center shadow-md transition-all cursor-pointer select-none"
+                  className="group relative w-20 h-20 sm:w-28 sm:h-28 shrink-0 rounded-xl bg-[#F1F2F5] dark:bg-[#0A0B0E] border border-black/15 hover:border-black/60 dark:border-white/20 dark:hover:border-white/70 overflow-hidden flex items-center justify-center shadow-md transition-all cursor-pointer select-none"
                 >
                   <span className="absolute top-1 left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-black/80 dark:border-white/90 z-10 group-hover:scale-110 transition-transform" />
                   <span className="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-black/80 dark:border-white/90 z-10 group-hover:scale-110 transition-transform" />
@@ -167,7 +178,7 @@ export default function FieldConsole({
                 <div className="flex-1 min-w-0 flex flex-col justify-between space-y-1.5 text-right">
                   <div className="self-end">
                     <div className="px-3 py-1 rounded-xs bg-black text-white dark:bg-[#EDEDED] dark:text-[#09090B] font-sans font-black text-center leading-tight shadow">
-                      <div className="text-[9px] sm:text-[10px] tracking-widest uppercase">VERIFIED CANDIDATE</div>
+                      <div className="text-[8.5px] sm:text-[10px] tracking-widest uppercase">VERIFIED CANDIDATE</div>
                     </div>
                     {/* Hazard Stripes Bar */}
                     <div className="h-1.5 w-full mt-1 bg-[repeating-linear-gradient(45deg,#09090B,#09090B_2px,#E2E4E8_2px,#E2E4E8_4px)] dark:bg-[repeating-linear-gradient(45deg,#EDEDED,#EDEDED_2px,#131418_2px,#131418_4px)]" />
@@ -175,7 +186,7 @@ export default function FieldConsole({
 
                   <div className="space-y-1 border-t border-[#E2E4E8] dark:border-white/10 pt-1.5">
                     <div className="text-[8px] sm:text-[8.5px] text-[#71717A] tracking-wider uppercase font-mono">EDUCATION // DEGREE</div>
-                    <div className="text-xs sm:text-sm font-bold text-[#09090B] dark:text-white tracking-wide leading-tight font-mono">
+                    <div className="text-[11.5px] sm:text-sm font-bold text-[#09090B] dark:text-white tracking-wide leading-tight font-mono">
                       B.TECH IN INFORMATION TECHNOLOGY
                     </div>
                     <div className="text-[10px] text-[#52525B] dark:text-[#A1A1AA] font-mono tracking-wider">
@@ -261,7 +272,7 @@ export default function FieldConsole({
                       key={mod.id}
                       onClick={() => {
                         playClick();
-                        setActiveModule(mod.id as any);
+                        handleSelectModule(mod.id as any);
                       }}
                       onMouseEnter={playHover}
                       className={`w-full px-2.5 py-1.5 rounded-lg flex items-center justify-between text-left transition-all cursor-pointer ${
@@ -331,7 +342,8 @@ export default function FieldConsole({
           </div>
 
           {/* ════════ RIGHT PANEL: ACTIVE TELEMETRY PANE (7 Cols) ════════ */}
-          <div className="lg:col-span-7 rounded-xl bg-[#F9F9FB] dark:bg-[#0B0C0E] border border-[#E2E4E8] dark:border-[#1E2026] p-3 sm:p-4 overflow-y-auto h-full min-h-0 flex flex-col space-y-3 text-left transition-colors">
+          <div ref={rightPanelRef}
+          className="lg:col-span-7 rounded-xl bg-[#F9F9FB] dark:bg-[#0B0C0E] border border-[#E2E4E8] dark:border-[#1E2026] p-3 sm:p-4 lg:overflow-y-auto lg:h-full lg:min-h-0 flex flex-col space-y-3 text-left transition-colors">
             
             {/* Terminal Command Prompt Header */}
               <div className="flex items-center justify-between text-xs text-[#71717A] pb-2 border-b border-[#E2E4E8] dark:border-[#1E2026] shrink-0">
@@ -343,6 +355,26 @@ export default function FieldConsole({
                 <span className="text-[9px] text-[#71717A] dark:text-[#52525B] uppercase tracking-wider font-mono">
                   VERIFIED RECORD
                 </span>
+              </div>
+
+              {/* Mobile Module Quick-Switcher (Visible only on mobile/tablet < lg) */}
+              <div className="flex lg:hidden items-center gap-1.5 overflow-x-auto pb-1 border-b border-[#E2E4E8] dark:border-[#1E2026] -mx-1 px-1 scrollbar-none">
+                {modules.map((m) => {
+                  const isSelected = activeModule === m.id;
+                  return (
+                    <button
+                      key={m.id}
+                      onClick={() => handleSelectModule(m.id as any)}
+                      className={`px-2.5 py-1 rounded text-[10px] font-mono shrink-0 transition-colors cursor-pointer border ${
+                        isSelected
+                          ? 'bg-black text-white dark:bg-[#EDEDED] dark:text-[#09090B] font-bold border-black dark:border-white shadow-xs'
+                          : 'bg-[#F4F4F6] hover:bg-[#EAECEF] dark:bg-[#141417] dark:hover:bg-[#1C1D22] text-[#52525B] dark:text-[#A1A1AA] border-[#E2E4E8] dark:border-[#27272A]'
+                      }`}
+                    >
+                      <span>{m.num} {m.title.split(' ')[0]}</span>
+                    </button>
+                  );
+                })}
               </div>
 
               {/* ── MODULE 01: TECHNICAL PROJECTS (EXACT FROM RESUME) ── */}
@@ -569,7 +601,7 @@ export default function FieldConsole({
                   </div>
 
                   {/* Embedded Terminal Frame */}
-                  <div className="flex-1 min-h-[340px] rounded-lg bg-[#0E0E11] border border-[#22242A] overflow-hidden flex flex-col shadow-inner">
+                  <div className="flex-1 min-h-[320px] h-[380px] lg:h-full rounded-lg bg-[#0E0E11] border border-[#22242A] overflow-hidden flex flex-col shadow-inner">
                     <div className="h-7 px-3 bg-[#131417] text-white font-mono text-[10px] flex items-center justify-between border-b border-[#22242A] select-none shrink-0">
                       <div className="flex items-center gap-2">
                         <div className="flex items-center gap-1">

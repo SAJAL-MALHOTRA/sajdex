@@ -218,7 +218,7 @@ export default function SajalsTastePlayer() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.16 }}
-            className="absolute right-0 top-9 z-50 w-80 sm:w-96 bg-white dark:bg-[#0E0F12] border border-[#E2E4E8] dark:border-[#27272A] rounded-xl p-3.5 shadow-2xl space-y-3 font-mono text-xs select-text text-[#09090B] dark:text-[#EDEDED]"
+            className="absolute right-0 top-9 z-50 w-[calc(100vw-1.5rem)] max-w-sm sm:w-96 bg-white dark:bg-[#0E0F12] border border-[#E2E4E8] dark:border-[#27272A] rounded-xl p-3 sm:p-3.5 shadow-2xl space-y-3 font-mono text-xs select-text text-[#09090B] dark:text-[#EDEDED]"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between border-b border-[#E2E4E8] dark:border-[#27272A] pb-2">
