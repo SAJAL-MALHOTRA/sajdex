@@ -166,8 +166,8 @@ export default function SajalsTastePlayer() {
           }}
           className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-l border border-r-0 text-[10px] font-mono tracking-wider transition-all cursor-pointer ${
             isPlaying
-              ? 'bg-white text-black border-white font-bold shadow-[0_0_14px_rgba(255,255,255,0.35)]'
-              : 'bg-[#141417] border-[#27272A] text-[#EDEDED] hover:bg-[#1E1E24]'
+              ? 'bg-black text-white border-black font-bold shadow-[0_0_12px_rgba(0,0,0,0.15)] dark:bg-white dark:text-black dark:border-white dark:shadow-[0_0_14px_rgba(255,255,255,0.35)]'
+              : 'bg-white hover:bg-[#F4F4F6] text-[#09090B] border-[#D1D5DB] shadow-sm dark:bg-[#141417] dark:border-[#27272A] dark:text-[#EDEDED] dark:hover:bg-[#1E1E24]'
           }`}
           title={isPlaying ? 'Pause music' : 'Play favorite songs'}
         >
@@ -175,9 +175,9 @@ export default function SajalsTastePlayer() {
             <>
               {/* Animated Mini Equalizer Bars */}
               <div className="flex items-end gap-0.5 h-2.5">
-                <span className="w-0.5 bg-black rounded-full animate-[pulse_0.6s_ease-in-out_infinite] h-2.5" />
-                <span className="w-0.5 bg-black rounded-full animate-[pulse_0.4s_ease-in-out_infinite_0.2s] h-1.5" />
-                <span className="w-0.5 bg-black rounded-full animate-[pulse_0.8s_ease-in-out_infinite_0.4s] h-2" />
+                <span className="w-0.5 bg-white dark:bg-black rounded-full animate-[pulse_0.6s_ease-in-out_infinite] h-2.5" />
+                <span className="w-0.5 bg-white dark:bg-black rounded-full animate-[pulse_0.4s_ease-in-out_infinite_0.2s] h-1.5" />
+                <span className="w-0.5 bg-white dark:bg-black rounded-full animate-[pulse_0.8s_ease-in-out_infinite_0.4s] h-2" />
               </div>
               <span className="max-w-[85px] sm:max-w-[105px] truncate font-sans text-[11px] font-bold">
                 {currentTrack.title}
@@ -186,7 +186,7 @@ export default function SajalsTastePlayer() {
             </>
           ) : (
             <>
-              <Play size={8.5} className="fill-current text-[#EDEDED] shrink-0" />
+              <Play size={8.5} className="fill-current text-[#09090B] dark:text-[#EDEDED] shrink-0" />
               <span className="font-semibold tracking-widest text-[9.5px]">SONGS</span>
             </>
           )}
@@ -198,10 +198,10 @@ export default function SajalsTastePlayer() {
             playClick();
             setIsExpanded(!isExpanded);
           }}
-          className={`flex items-center gap-1 px-1.5 py-0.5 rounded-r border border-[#27272A] text-[9.5px] font-mono transition-all cursor-pointer ${
+          className={`flex items-center gap-1 px-1.5 py-0.5 rounded-r border border-[#D1D5DB] dark:border-[#27272A] text-[9.5px] font-mono transition-all cursor-pointer shadow-sm ${
             isExpanded
-              ? 'bg-[#1E1E24] text-white border-white/40'
-              : 'bg-[#141417] text-[#71717A] hover:text-white hover:bg-[#1E1E24]'
+              ? 'bg-[#EAECEF] text-black border-black/40 dark:bg-[#1E1E24] dark:text-white dark:border-white/40'
+              : 'bg-white text-[#52525B] hover:text-[#09090B] hover:bg-[#F4F4F6] dark:bg-[#141417] dark:text-[#71717A] dark:hover:text-white dark:hover:bg-[#1E1E24]'
           }`}
           title="Browse 6 favorite songs"
         >
@@ -218,20 +218,20 @@ export default function SajalsTastePlayer() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.16 }}
-            className="absolute right-0 top-9 z-50 w-80 sm:w-96 bg-[#0E0F12] border border-[#27272A] rounded-xl p-3.5 shadow-2xl space-y-3 font-mono text-xs select-text"
+            className="absolute right-0 top-9 z-50 w-80 sm:w-96 bg-white dark:bg-[#0E0F12] border border-[#E2E4E8] dark:border-[#27272A] rounded-xl p-3.5 shadow-2xl space-y-3 font-mono text-xs select-text text-[#09090B] dark:text-[#EDEDED]"
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between border-b border-[#27272A] pb-2">
+            <div className="flex items-center justify-between border-b border-[#E2E4E8] dark:border-[#27272A] pb-2">
               <div className="flex items-center gap-2">
-                <span className={`w-1.5 h-1.5 rounded-full ${isPlaying ? 'bg-emerald-400 animate-pulse' : 'bg-zinc-600'}`} />
-                <span className="font-mono text-[10.5px] font-bold text-white tracking-wider uppercase">
+                <span className={`w-1.5 h-1.5 rounded-full ${isPlaying ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-400 dark:bg-zinc-600'}`} />
+                <span className="font-mono text-[10.5px] font-bold text-[#09090B] dark:text-white tracking-wider uppercase">
                   AUDIO ROTATION // SAJAL&apos;S TASTE
                 </span>
               </div>
 
               <button
                 onClick={() => setIsExpanded(false)}
-                className="p-1 rounded bg-[#18181B] border border-[#27272A] text-[#71717A] hover:text-white transition-colors cursor-pointer"
+                className="p-1 rounded bg-[#F4F4F6] hover:bg-[#EAECEF] border border-[#D1D5DB] text-[#52525B] hover:text-[#09090B] dark:bg-[#18181B] dark:border-[#27272A] dark:text-[#71717A] dark:hover:text-white transition-colors cursor-pointer"
               >
                 <X size={12} />
               </button>
@@ -239,19 +239,19 @@ export default function SajalsTastePlayer() {
 
             {/* Error Banner */}
             {playbackError && (
-              <div className="p-2 rounded bg-[#18181B] border border-[#3F3F46] text-xs space-y-1">
-                <div className="flex items-center gap-1.5 text-white font-bold text-[10.5px]">
+              <div className="p-2 rounded bg-amber-500/10 border border-amber-500/30 dark:bg-[#18181B] dark:border-[#3F3F46] text-xs space-y-1">
+                <div className="flex items-center gap-1.5 text-amber-700 dark:text-white font-bold text-[10.5px]">
                   <AlertCircle size={12} />
                   <span>PLAYBACK NOTICE</span>
                 </div>
-                <p className="text-[10px] text-[#A1A1AA]">
+                <p className="text-[10px] text-[#52525B] dark:text-[#A1A1AA]">
                   Direct browser stream interrupted. Open in Spotify:
                 </p>
                 <a
                   href={currentTrack.spotifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[10px] text-white hover:underline pt-0.5"
+                  className="inline-flex items-center gap-1 text-[10px] text-[#09090B] dark:text-white hover:underline pt-0.5 font-bold"
                 >
                   <span>SPOTIFY REEL ↗</span>
                 </a>
@@ -259,22 +259,22 @@ export default function SajalsTastePlayer() {
             )}
 
             {/* Active Track Card */}
-            <div className="p-3 rounded-lg bg-[#141417] border border-[#27272A] space-y-2.5">
+            <div className="p-3 rounded-lg bg-[#F9F9FB] dark:bg-[#141417] border border-[#E2E4E8] dark:border-[#27272A] space-y-2.5 shadow-xs">
               <div className="flex items-center justify-between text-[9.5px] text-[#71717A]">
                 <span>TRACK {String(currentTrackIndex + 1).padStart(2, '0')} OF {playlist.length}</span>
-                <span className="text-[#A1A1AA] font-semibold">{currentTrack.category}</span>
+                <span className="text-[#09090B] dark:text-[#A1A1AA] font-semibold">{currentTrack.category}</span>
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded bg-[#1C1D22] border border-[#27272A] flex items-center justify-center shrink-0">
-                  <Disc size={16} className={`text-[#A1A1AA] ${isPlaying ? 'animate-spin text-white' : ''}`} />
+                <div className="w-9 h-9 rounded bg-[#F1F2F5] dark:bg-[#1C1D22] border border-[#E2E4E8] dark:border-[#27272A] flex items-center justify-center shrink-0">
+                  <Disc size={16} className={`text-[#52525B] dark:text-[#A1A1AA] ${isPlaying ? 'animate-spin text-[#09090B] dark:text-white' : ''}`} />
                 </div>
 
                 <div className="truncate flex-1">
-                  <h4 className="text-xs font-bold text-white truncate font-sans">
+                  <h4 className="text-xs font-bold text-[#09090B] dark:text-white truncate font-sans">
                     {currentTrack.title}
                   </h4>
-                  <p className="text-[10.5px] text-[#A1A1AA] truncate font-sans">
+                  <p className="text-[10.5px] text-[#52525B] dark:text-[#A1A1AA] truncate font-sans">
                     {currentTrack.artist}
                   </p>
                 </div>
@@ -284,10 +284,10 @@ export default function SajalsTastePlayer() {
               <div className="space-y-1 pt-0.5">
                 <div
                   onClick={handleSeek}
-                  className="relative h-1.5 w-full bg-[#27272A] rounded-full overflow-hidden cursor-pointer"
+                  className="relative h-1.5 w-full bg-[#E2E4E8] dark:bg-[#27272A] rounded-full overflow-hidden cursor-pointer"
                 >
                   <div
-                    className="h-full bg-white transition-all duration-100"
+                    className="h-full bg-black dark:bg-white transition-all duration-100"
                     style={{ width: `${(progressSec / (durationSec || 1)) * 100}%` }}
                   />
                 </div>
@@ -302,7 +302,7 @@ export default function SajalsTastePlayer() {
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={handlePrevTrack}
-                    className="p-1 rounded bg-[#1E1E24] border border-[#27272A] text-[#A1A1AA] hover:text-white transition-colors cursor-pointer"
+                    className="p-1 rounded bg-white hover:bg-[#F4F4F6] border border-[#D1D5DB] text-[#52525B] hover:text-[#09090B] dark:bg-[#1E1E24] dark:border-[#27272A] dark:text-[#A1A1AA] dark:hover:text-white transition-colors cursor-pointer"
                     title="Previous Track"
                   >
                     <SkipBack size={12} />
@@ -310,7 +310,7 @@ export default function SajalsTastePlayer() {
 
                   <button
                     onClick={togglePlay}
-                    className="p-1.5 rounded bg-white hover:bg-neutral-200 text-black transition-colors flex items-center justify-center cursor-pointer shadow"
+                    className="p-1.5 rounded bg-black hover:bg-neutral-800 text-white dark:bg-white dark:hover:bg-neutral-200 dark:text-black transition-colors flex items-center justify-center cursor-pointer shadow"
                     title={isPlaying ? 'Pause' : 'Play'}
                   >
                     {isPlaying ? <Pause size={12} className="fill-current" /> : <Play size={12} className="fill-current ml-0.5" />}
@@ -318,7 +318,7 @@ export default function SajalsTastePlayer() {
 
                   <button
                     onClick={handleNextTrack}
-                    className="p-1 rounded bg-[#1E1E24] border border-[#27272A] text-[#A1A1AA] hover:text-white transition-colors cursor-pointer"
+                    className="p-1 rounded bg-white hover:bg-[#F4F4F6] border border-[#D1D5DB] text-[#52525B] hover:text-[#09090B] dark:bg-[#1E1E24] dark:border-[#27272A] dark:text-[#A1A1AA] dark:hover:text-white transition-colors cursor-pointer"
                     title="Next Track"
                   >
                     <SkipForward size={12} />
@@ -326,13 +326,13 @@ export default function SajalsTastePlayer() {
                 </div>
 
                 {/* Volume Slider & Mute Toggle */}
-                <div className="flex items-center gap-1.5 text-[#71717A]">
+                <div className="flex items-center gap-1.5 text-[#52525B] dark:text-[#71717A]">
                   <button
                     onClick={() => setIsMuted(!isMuted)}
-                    className="p-1 hover:text-white transition-colors cursor-pointer"
+                    className="p-1 hover:text-[#09090B] dark:hover:text-white transition-colors cursor-pointer"
                     title={isMuted ? 'Unmute' : 'Mute'}
                   >
-                    {isMuted || volume === 0 ? <VolumeX size={13} className="text-red-400" /> : <Volume2 size={13} />}
+                    {isMuted || volume === 0 ? <VolumeX size={13} className="text-red-500" /> : <Volume2 size={13} />}
                   </button>
                   <input
                     type="range"
@@ -345,7 +345,7 @@ export default function SajalsTastePlayer() {
                       setVolume(val);
                       if (val > 0) setIsMuted(false);
                     }}
-                    className="w-16 h-1 bg-[#27272A] rounded-lg appearance-none cursor-pointer accent-white"
+                    className="w-16 h-1 bg-[#E2E4E8] dark:bg-[#27272A] rounded-lg appearance-none cursor-pointer accent-black dark:accent-white"
                     title={`Volume: ${Math.round((isMuted ? 0 : volume) * 100)}%`}
                   />
                 </div>
@@ -354,7 +354,7 @@ export default function SajalsTastePlayer() {
                   href={currentTrack.spotifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[10px] text-[#A1A1AA] hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1 text-[10px] text-[#52525B] hover:text-[#09090B] dark:text-[#A1A1AA] dark:hover:text-white transition-colors"
                 >
                   <span>SPOTIFY</span>
                   <ExternalLink size={9} />
@@ -373,12 +373,12 @@ export default function SajalsTastePlayer() {
                     onMouseEnter={playHover}
                     className={`w-full flex items-center justify-between p-1.5 rounded-md text-left transition-colors cursor-pointer ${
                       isCurrent
-                        ? 'bg-[#1E1E24] border border-white/20 text-white font-medium'
-                        : 'hover:bg-[#18181B] border border-transparent text-[#71717A] hover:text-white'
+                        ? 'bg-black/5 dark:bg-[#1E1E24] border border-black/20 dark:border-white/20 text-[#09090B] dark:text-white font-medium'
+                        : 'hover:bg-[#F4F4F6] border border-transparent text-[#52525B] hover:text-[#09090B] dark:hover:bg-[#18181B] dark:text-[#71717A] dark:hover:text-white'
                     }`}
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <span className={`text-[9.5px] font-bold ${isCurrent ? 'text-white' : 'text-[#52525B]'}`}>
+                      <span className={`text-[9.5px] font-bold ${isCurrent ? 'text-[#09090B] dark:text-white' : 'text-[#71717A] dark:text-[#52525B]'}`}>
                         {String(idx + 1).padStart(2, '0')}
                       </span>
                       <div className="truncate">
@@ -386,7 +386,7 @@ export default function SajalsTastePlayer() {
                         <span className="text-[9.5px] text-[#71717A] block truncate font-sans">{tr.artist}</span>
                       </div>
                     </div>
-                    <span className="text-[9.5px] text-[#52525B] shrink-0 font-mono">{tr.duration}</span>
+                    <span className="text-[9.5px] text-[#71717A] dark:text-[#52525B] shrink-0 font-mono">{tr.duration}</span>
                   </button>
                 );
               })}

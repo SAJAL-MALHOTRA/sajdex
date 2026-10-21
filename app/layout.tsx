@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,14 +20,32 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "SAJAL MALHOTRA // SYSTEMS ARCHITECTURE",
   description:
-    "Engineering portfolio for Sajal Malhotra. High-concurrency distributed systems, real-time WebSocket architecture, and technical sartorial curation at NIT Jalandhar.",
+    "Engineering portfolio for Sajal Malhotra. High-concurrency distributed systems, real-time WebSocket architecture, and machine learning at NIT Jalandhar.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark`}>
-      <body className="min-h-screen bg-[#09090B] text-[#EDEDED] font-mono antialiased selection:bg-white selection:text-black overflow-x-hidden">
-        {children}
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        {/* Anti-flash inline script: Default to LIGHT unless user explicitly chose dark */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.getItem('sajdex-theme') === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-screen font-mono antialiased selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black overflow-x-hidden">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -6,6 +6,7 @@ import ProjectModal from '@/components/ui/ProjectModal';
 import DeveloperTerminal from '@/components/terminal/DeveloperTerminal';
 import KonamiEasterEgg from '@/components/ui/KonamiEasterEgg';
 import SajalsTastePlayer from '@/components/layout/SajalsTastePlayer';
+import ThemeToggle from '@/components/theme/ThemeToggle';
 import { projects } from '@/data/projects';
 import { useSound } from '@/hooks/useSound';
 import { Terminal, X } from 'lucide-react';
@@ -46,34 +47,35 @@ export default function Home() {
   }, [playClick, terminalOpen, modalProjectId]);
 
   return (
-    <main className="h-screen max-h-screen w-full bg-[#09090B] text-[#EDEDED] font-mono antialiased selection:bg-white selection:text-black flex flex-col justify-between items-center p-2 sm:p-3 relative overflow-hidden">
+    <main className="h-screen max-h-screen w-full bg-[#F4F4F6] dark:bg-[#09090B] text-[#09090B] dark:text-[#EDEDED] font-mono antialiased selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black flex flex-col justify-between items-center p-2 sm:p-3 relative overflow-hidden transition-colors duration-200">
       
-      {/* ── MINIMALIST MONOCHROME TECHNICAL GRID ── */}
-      <div className="fixed inset-0 bg-[radial-gradient(#27272A_1px,transparent_1px)] [background-size:20px_20px] opacity-35 pointer-events-none" />
+      {/* ── MINIMALIST TECHNICAL GRID (LIGHT & DARK ADAPTIVE) ── */}
+      <div className="fixed inset-0 bg-[radial-gradient(#CBD0D8_1px,transparent_1px)] dark:bg-[radial-gradient(#27272A_1px,transparent_1px)] [background-size:20px_20px] opacity-50 dark:opacity-35 pointer-events-none" />
 
       {/* ── TOP AMBIENT STATUS STRIP ── */}
-      <header className="w-full max-w-5xl z-30 flex items-center justify-between font-mono text-[10.5px] text-[#71717A] select-none py-1 px-1 shrink-0">
+      <header className="w-full max-w-5xl z-30 flex items-center justify-between font-mono text-[10.5px] text-[#52525B] dark:text-[#71717A] select-none py-1 px-1 shrink-0">
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
-          <span className="text-white font-medium tracking-wider">SAJAL MALHOTRA</span>
-          <span className="text-[#3F3F46]">•</span>
-          <span className="text-[#A1A1AA] hidden sm:inline">NIT JALANDHAR // IT (2025–2029)</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-black/80 dark:bg-white/80" />
+          <span className="text-[#09090B] dark:text-white font-medium tracking-wider">SAJAL MALHOTRA</span>
+          <span className="text-[#D1D5DB] dark:text-[#3F3F46]">•</span>
+          <span className="text-[#52525B] dark:text-[#A1A1AA] hidden sm:inline">NIT JALANDHAR // IT (2025–2029)</span>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-2.5">
-          <span className="text-[9.5px] text-[#52525B] hidden md:inline">
+          <span className="text-[9.5px] text-[#71717A] dark:text-[#52525B] hidden md:inline">
             PRESS &lsquo;1-5&rsquo; TO SWITCH MODULES
           </span>
+          <ThemeToggle />
           <SajalsTastePlayer />
           <button
             onClick={() => {
               playClick();
               setTerminalOpen(true);
             }}
-            className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#141417] hover:bg-[#1E1E24] border border-[#27272A] text-[#EDEDED] font-medium transition-colors cursor-pointer text-[10px]"
+            className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-white hover:bg-[#F4F4F6] dark:bg-[#141417] dark:hover:bg-[#1E1E24] border border-[#D1D5DB] dark:border-[#27272A] text-[#09090B] dark:text-[#EDEDED] font-medium transition-colors cursor-pointer text-[10px] shadow-sm"
             title="Terminal (~)"
           >
-            <Terminal size={10} className="text-[#A1A1AA]" />
+            <Terminal size={10} className="text-[#52525B] dark:text-[#A1A1AA]" />
             <span>CLI (~)</span>
           </button>
         </div>
@@ -91,7 +93,7 @@ export default function Home() {
       </div>
 
       {/* ── BOTTOM FOOTER CAPTION ── */}
-      <footer className="w-full max-w-5xl z-30 flex items-center justify-between font-mono text-[9px] text-[#52525B] tracking-wider select-none py-1 px-1 border-t border-[#18181B] shrink-0">
+      <footer className="w-full max-w-5xl z-30 flex items-center justify-between font-mono text-[9px] text-[#71717A] dark:text-[#52525B] tracking-wider select-none py-1 px-1 border-t border-[#E4E4E7] dark:border-[#18181B] shrink-0">
         <div>
           DEVDEX // MODEL DX-042 · SM-NITJ-2029
         </div>
@@ -110,13 +112,13 @@ export default function Home() {
 
       {/* ── DEVELOPER TERMINAL OVERLAY ── */}
       {terminalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md">
-          <div className="relative w-full max-w-3xl bg-[#0E0E11] border border-[#27272A] rounded-xl shadow-2xl overflow-hidden flex flex-col">
-            <div className="h-9 px-4 bg-[#141417] text-white font-mono text-xs font-medium flex items-center justify-between border-b border-[#27272A] select-none">
-              <span className="tracking-wide text-white">DEVDEX TERMINAL // SHELL (zsh)</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/80 backdrop-blur-md">
+          <div className="relative w-full max-w-3xl bg-white dark:bg-[#0E0E11] border border-[#E2E4E8] dark:border-[#27272A] rounded-xl shadow-2xl overflow-hidden flex flex-col">
+            <div className="h-9 px-4 bg-[#F4F4F6] dark:bg-[#141417] text-[#09090B] dark:text-white font-mono text-xs font-medium flex items-center justify-between border-b border-[#E2E4E8] dark:border-[#27272A] select-none">
+              <span className="tracking-wide">DEVDEX TERMINAL // SHELL (zsh)</span>
               <button
                 onClick={() => setTerminalOpen(false)}
-                className="hover:bg-white/10 p-1 rounded text-[#71717A] hover:text-white cursor-pointer transition-colors"
+                className="hover:bg-black/10 dark:hover:bg-white/10 p-1 rounded text-[#71717A] hover:text-[#09090B] dark:hover:text-white cursor-pointer transition-colors"
               >
                 <X size={13} />
               </button>
