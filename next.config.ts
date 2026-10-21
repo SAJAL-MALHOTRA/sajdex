@@ -13,6 +13,9 @@ if (isGitHubActions) {
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || repoBasePath;
 
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   output: 'export',
   basePath: basePath ? basePath : undefined,
   images: {
